@@ -2,7 +2,7 @@ const $arenas = document.querySelector('.arenas');
 
 const player1 = {
     name: 'Liukang',
-    hp: 100,
+    hp: getRandomArbitrary(50, 100),
     img: 'http://reactmarathon-api.herokuapp.com/assets/liukang.gif',
     weapon: ['head'],
     attack: function() {
@@ -13,7 +13,7 @@ const player1 = {
 
 const player2 = {
     name: 'SCORPION',
-    hp: 100,
+    hp: getRandomArbitrary(50, 100),
     img: 'http://reactmarathon-api.herokuapp.com/assets/scorpion.gif',
     weapon: ['foot'],
     attack: function() {
@@ -67,11 +67,13 @@ $randomButton.addEventListener('click', function() {
 
 function changeHP(player) {
     const $playerLife = document.querySelector('.player' + player.player + ' .life');
-    player.hp -= 20;
+    player.hp -= getRandomArbitrary(0, 20);
     $playerLife.style.width = player.hp + '%';
 
     if (player.hp < 0) {
         $arenas.appendChild(playerLose(player.name));
+        $playerLife.style.width = 0 + '%';
+        $randomButton.disabled = true;
     }
 }
 
@@ -80,4 +82,8 @@ function playerLose(name) {
     $loseTitle.innerText = name + ' lose';
 
     return $loseTitle;
+}
+
+function getRandomArbitrary(min, max) {
+    return Math.ceil(Math.random() * (max - min) + min);
 }
